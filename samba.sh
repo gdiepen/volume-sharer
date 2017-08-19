@@ -239,6 +239,13 @@ The 'command' (if provided and valid) will be run instead of samba
     exit $RC
 }
 
+
+touch /etc/samba/cli_shares.conf
+
+echo "include = /etc/samba/cli_shares.conf" >> /etc/samba/smb.conf
+echo "include = /etc/samba/volume_shares.conf" >> /etc/samba/smb.conf
+
+
 [[ "${USERID:-""}" =~ ^[0-9]+$ ]] && usermod -u $USERID -o smbuser
 [[ "${GROUPID:-""}" =~ ^[0-9]+$ ]] && groupmod -g $GROUPID -o users
 
