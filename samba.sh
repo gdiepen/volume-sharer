@@ -269,6 +269,9 @@ while getopts ":hc:i:nprs:St:u:Ww:" opt; do
 done
 shift $(( OPTIND - 1 ))
 
+create_volume_shares
+
+
 [[ "${CHARMAP:-""}" ]] && charmap "$CHARMAP"
 [[ "${PERMISSIONS:-""}" ]] && perms
 [[ "${RECYCLE:-""}" ]] && recycle
