@@ -97,6 +97,35 @@ share() { local share="$1" path="$2" browsable=${3:-yes} ro=${4:-yes} \
     echo "" >>$file
 }
 
+
+
+volumeshare() { local share="$1" path="$2" browsable=${3:-yes} ro=${4:-yes} \
+                guest=${5:-yes} users=${6:-""} admins=${7:-""} \
+                writelist=${8:-""} file=/etc/samba/volume_shares.conf
+    sed -i "/\\[$share\\]/,/^\$/d" $file
+    echo "[$share]" >>$file
+    echo "   path = $path" >>$file
+    echo "   browsable = $browsable" >>$file
+    echo "   read only = $ro" >>$file
+    echo "   guest ok = $guest" >>$file
+    echo -n "   veto files = /._*/.apdisk/.AppleDouble/.DS_Store/" >>$file
+    echo -n ".TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/" >>$file
+    echo "Network Trash Folder/Temporary Items/Thumbs.db/" >>$file
+    echo "   delete veto files = yes" >>$file
+    [[ ${users:-""} && ! ${users:-""} =~ all ]] &&
+        echo "   valid users = $(tr ',' ' ' <<< $users)" >>$file
+    [[ ${admins:-""} && ! ${admins:-""} =~ none ]] &&
+        echo "   admin users = $(tr ',' ' ' <<< $admins)" >>$file
+    [[ ${writelist:-""} && ! ${writelist:-""} =~ none ]] &&
+        echo "   write list = $(tr ',' ' ' <<< $writelist)" >>$file
+    echo "" >>$file
+}
+
+
+
+
+
+
 ### smb: disable SMB2 minimun
 # Arguments:
 #   none)
