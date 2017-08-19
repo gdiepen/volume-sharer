@@ -289,5 +289,17 @@ elif ps -ef | egrep -v grep | grep -q smbd; then
     echo "Service already running, please restart container to apply changes"
 else
     [[ ${NMBD:-""} ]] && ionice -c 3 nmbd -D
-    exec ionice -c 3 smbd -FS </dev/null
+    exec ionice -c 3 smbd -FS & 
+    
+    echo "Listening for docker volume events" 
+    docker events --filter "type=volume" | while read aaa 
+        do
+        echo "Recreating the volume shares and restarting Samba"
+        create_volume_shares        
+
+        killall -HUP smbd nmbd
+    done
 fi
+
+
+
