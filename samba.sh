@@ -181,6 +181,20 @@ widelinks() { local file=/etc/samba/smb.conf \
     sed -i 's/\(follow symlinks = yes\)/'"$replace"'/' $file
 }
 
+
+create_volume_shares(){
+    #Now loop over all of the volume shares
+    rm -f /etc/samba/volume_shares.conf
+    touch /etc/samba/volume_shares.conf
+    for docker_volume in `docker volume ls | grep "^local" | sed 's/^local *//'`
+    do
+        eval volumeshare ${docker_volume} "/docker_volumes/${docker_volume}/_data" "yes" "yes"
+    done
+}
+
+
+
+
 ### usage: Help
 # Arguments:
 #   none)
