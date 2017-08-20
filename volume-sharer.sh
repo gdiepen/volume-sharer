@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #===============================================================================
-#          FILE: samba.sh
+#          FILE: volume-sharer.sh
 #
-#         USAGE: ./samba.sh
+#         USAGE: ./volume-sharer.sh
 #
-#   DESCRIPTION: Entrypoint for samba docker container
+#   DESCRIPTION: Entrypoint for gdiepen/volume-sharer docker container
 #
 #       OPTIONS: ---
 #  REQUIREMENTS: ---
@@ -15,6 +15,7 @@
 #  ORGANIZATION:
 #       CREATED: 09/28/2014 12:11
 #      REVISION: 1.1
+#      BASED ON: https://github.com/dperson/samba (dperson@gmail.com)
 #===============================================================================
 
 set -o nounset                              # Treat unset variables as an error
