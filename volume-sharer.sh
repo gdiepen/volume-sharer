@@ -189,7 +189,7 @@ create_volume_shares(){
     touch /etc/samba/volume_shares.conf
     for docker_volume in `docker volume ls | grep "^local" | sed 's/^local *//'`
     do
-        eval volumeshare ${docker_volume} "/docker_volumes/${docker_volume}/_data" "yes" "yes"
+        eval volumeshare ${docker_volume} "/docker_volumes/${docker_volume}/_data" "yes" "no"
     done
 }
 
